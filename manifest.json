@@ -1,0 +1,26 @@
+{
+  "name": "Coroom — 회의실 예약",
+  "short_name": "Coroom",
+  "description": "회의실 예약 현황 확인 및 예약/취소",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f5f7fa",
+  "theme_color": "#3b5d82",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

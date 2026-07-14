@@ -539,6 +539,38 @@ function setupRealtime() {
   }
 }
 
+// ================= 오프라인 상태 표시 =================
+
+function updateOfflineBadge() {
+  const badge = document.getElementById("offlineBadge");
+  badge.hidden = navigator.onLine;
+}
+
+function setupConnectionBadge() {
+  window.addEventListener("online", () => {
+    updateOfflineBadge();
+    showToast("다시 연결되었습니다.");
+    refreshBoard();
+    if (state.currentView === "mine") runMineSearch();
+  });
+  window.addEventListener("offline", () => {
+    updateOfflineBadge();
+    showToast("오프라인 상태입니다. 마지막으로 불러온 정보를 보여줍니다.", true);
+  });
+  updateOfflineBadge();
+}
+
+// ================= 서비스 워커 등록 (PWA / 오프라인 지원) =================
+
+function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch((err) => {
+      console.warn("서비스 워커 등록 실패:", err);
+    });
+  });
+}
+
 // ================= 초기화 =================
 
 function attachEventListeners() {
@@ -575,9 +607,11 @@ function attachEventListeners() {
 async function init() {
   document.getElementById("datePicker").value = state.currentDate;
   attachEventListeners();
+  setupConnectionBadge();
+  registerServiceWorker();
   await loadRooms();
   await refreshBoard();
-  setupRealtime();
+  if (navigator.onLine) setupRealtime();
 }
 
 init();
