@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>coroom — 회의실 예약</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <h1 class="logo">coroom</h1>
+      <nav class="tabs">
+        <button class="tab-btn active" data-view="board">예약 현황</button>
+        <button class="tab-btn" data-view="mine">내 예약</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- 예약 현황 보드 -->
+    <section id="view-board" class="view active">
+      <div class="board-toolbar">
+        <div class="date-nav">
+          <button id="prevDay" class="icon-btn" title="이전 날짜">‹</button>
+          <input type="date" id="datePicker" />
+          <button id="nextDay" class="icon-btn" title="다음 날짜">›</button>
+          <button id="todayBtn" class="ghost-btn">오늘</button>
+        </div>
+        <div class="legend">
+          <span class="legend-item"><span class="swatch swatch-empty"></span>예약 가능</span>
+          <span class="legend-item"><span class="swatch swatch-booked"></span>예약됨</span>
+        </div>
+      </div>
+
+      <div id="boardStatus" class="status-line" hidden></div>
+
+      <div class="board-scroll">
+        <div id="boardGrid" class="board-grid"></div>
+      </div>
+    </section>
+
+    <!-- 내 예약 목록 -->
+    <section id="view-mine" class="view">
+      <div class="mine-toolbar">
+        <label for="mineNameFilter">예약자명</label>
+        <input type="text" id="mineNameFilter" placeholder="이름을 입력하세요 (예: 홍길동)" />
+        <button id="mineSearchBtn" class="primary-btn">조회</button>
+      </div>
+      <div id="mineStatus" class="status-line" hidden></div>
+      <div id="mineList" class="mine-list"></div>
+    </section>
+  </main>
+
+  <!-- 예약 생성 모달 -->
+  <div id="createModal" class="modal-overlay" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2>예약하기</h2>
+        <button class="modal-close" data-close="createModal">×</button>
+      </div>
+      <form id="createForm" class="modal-body">
+        <div class="field-row">
+          <div class="field">
+            <label>회의실</label>
+            <div id="createRoomLabel" class="static-value"></div>
+          </div>
+          <div class="field">
+            <label>날짜</label>
+            <div id="createDateLabel" class="static-value"></div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="createStart">시작 시간</label>
+            <select id="createStart" required></select>
+          </div>
+          <div class="field">
+            <label for="createEnd">종료 시간</label>
+            <select id="createEnd" required></select>
+          </div>
+        </div>
+        <div id="createRoomNote" class="room-note" hidden></div>
+        <div class="field">
+          <label for="createReserver">예약자명 *</label>
+          <input type="text" id="createReserver" required placeholder="예: 홍길동" />
+        </div>
+        <div class="field">
+          <label for="createDept">부서</label>
+          <input type="text" id="createDept" placeholder="예: 마케팅팀" />
+        </div>
+        <div class="field">
+          <label for="createTitle">회의 제목 *</label>
+          <input type="text" id="createTitle" required placeholder="예: 주간 정기 회의" />
+        </div>
+        <div id="createFormError" class="form-error" hidden></div>
+        <div class="modal-actions">
+          <button type="button" class="ghost-btn" data-close="createModal">취소</button>
+          <button type="submit" class="primary-btn" id="createSubmitBtn">예약하기</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 예약 상세 모달 -->
+  <div id="detailModal" class="modal-overlay" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2>예약 상세</h2>
+        <button class="modal-close" data-close="detailModal">×</button>
+      </div>
+      <div class="modal-body">
+        <dl id="detailContent" class="detail-list"></dl>
+        <div id="detailError" class="form-error" hidden></div>
+        <div class="modal-actions">
+          <button type="button" class="ghost-btn" data-close="detailModal">닫기</button>
+          <button type="button" class="danger-btn" id="cancelReservationBtn">취소하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
