@@ -14,8 +14,8 @@ const STATIC_ASSETS = [
   "./style.css",
   "./app.js",
   "./manifest.json",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
+  "https://cdn.jsdelivr.net/gh/BLOOSALMON/coroom@main/icons/icon-192.png",
+  "https://cdn.jsdelivr.net/gh/BLOOSALMON/coroom@main/icons/icon-512.png",
   "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js",
 ];
 
